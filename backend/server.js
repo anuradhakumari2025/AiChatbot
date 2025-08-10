@@ -17,11 +17,14 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
+
   socket.on("message", (msg) => {
     console.log("Message received: " + msg);
   });
+
   socket.on("ai-message", async (data) => {
-    chatHistory.push({ role: "user", parts: [{ text: String(data) }] });
+    // console.log("AI message received: " + data);
+    chatHistory.push({ role: "user", parts: [{ text: data }] });
 
     const response = await generateText(chatHistory);
 
@@ -32,7 +35,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Namaste!");
 });
 
 httpServer.listen(3000, () => {
